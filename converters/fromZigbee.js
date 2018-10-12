@@ -868,6 +868,53 @@ const converters = {
         },
     },
 
+    ZBESTTHERM01_temperature: {
+        cid: 'hvacThermostat',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+//console.log('hvak.attRep');
+//console.log( msg.data);
+
+	if ('localTemp' in msg.data.data)
+            return {temperature: msg.data.data['localTemp'] / 100.0};
+	if ('occupiedHeatingSetpoint' in msg.data.data)
+	    return {temperatureSet: msg.data.data['occupiedHeatingSetpoint'] / 100.0};
+	if ('runningState' in msg.data.data)
+            return {relaystate: msg.data.data['runningState']};
+
+        },
+    },
+
+    ZBESTTHERM01_temperature1: {
+        cid: 'hvacThermostat',
+        type: 'devChange',
+        convert: (model, msg, publish, options) => {
+//console.log('hvak.devChange ');
+//console.log( msg.data);
+	if ('occupiedHeatingSetpoint' in msg.data.data)
+            return {temperatureSet: msg.data.data['occupiedHeatingSetpoint'] / 100.0};
+        },
+    },
+
+    ZBESTTHERM01_on: {
+        cid: 'genOnOff',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+//console.log('of.attRepe ');
+//console.log( msg.data);
+           return msg.data.data['onOff']===1 ? {state: 'heat'}:{state: 'off'};
+        },
+    },
+    ZBESTTHERM01_change: {
+        cid: 'genOnOff',
+        type: 'devChange',
+        convert: (model, msg, publish, options) => {
+//console.log('Of.devChange ');
+//console.log( msg.data);
+           return msg.data.data['onOff']===1 ? {state: 'heat'}:{state: 'off'};
+        },
+    },
+
     // Ignore converters (these message dont need parsing).
     ignore_doorlock_change: {
         cid: 'closuresDoorLock',

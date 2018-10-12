@@ -222,6 +222,31 @@ const converters = {
             };
         },
     },
+    onoff_mode: {
+        key: 'state',
+        attr: ['onOff'],//
+        convert: (value, message) => {
+	    const v = value.toLowerCase()==='heat' ? 'on':'off'; 
+            return {
+                cid: 'genOnOff',
+                cmd: v,
+                type: 'functional',
+                zclData: {},
+            };
+        },
+    },
+    temperatureSet: {
+        key: 'value',
+        attr: ['occupiedHeatingSetpoint'],
+        convert: (value, message) => {
+            return {
+                cid: 'hvacThermostat',
+                cmd: 'occupiedHeatingSetpoint',
+                type: 'write',
+                zclData: value * 100,
+            };
+        },
+    },
     // Ignore converters
     ignore_transition: {
         key: 'transition',

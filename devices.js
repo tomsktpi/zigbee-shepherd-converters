@@ -1306,6 +1306,17 @@ const devices = [
             execute(device, actions, callback);
         },
     },
+
+    { 
+   	zigbeeModel: ['lumi.ctrl_hvac'], // The model ID from: Device with modelID 'lumi.sens' is not supported.
+    	model: 'ZBESTTHERM01', // Vendor model number, look on the device for a model number
+    	vendor: 'zBest', // Vendor of the device (only used for wiki and startup logging)
+    	description: 'thermostat ', // Description of the device, copy from vendor site. (only used for wiki and startup logging)
+    	supports: 'temperature and humidity', // Actions this device supports (only used for wiki)
+    	fromZigbee: [fz.ZBESTTHERM01_temperature,fz.ZBESTTHERM01_temperature1,fz.ZBESTTHERM01_on, fz.ZBESTTHERM01_change], // We will add this later
+    	toZigbee: [tz.onoff_mode,tz.temperatureSet], // Should be empty, unless device can be controlled (e.g. lights, switches).
+     },
+
 ];
 
 module.exports = devices;
